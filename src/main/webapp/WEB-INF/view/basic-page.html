@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>News project</title>
+    <style type="text/css">
+html, body {
+	height: 100%;
+	width: 1000px;
+	border: 1px solid Silver;
+}
+
+* {
+	margin: 0 auto;
+}
+
+.header {
+	position: fixed;
+	height: 120px;
+	width: 1000px;
+	border: 1px solid Silver;
+	background-color: White;
+	margin-left: -1px;
+	margin-right: -1px;
+	margin-top: -1px;
+}
+
+.prname {
+	margin-left: 400px;
+	margin-top: 39px;
+	font-size: 38px;
+}
+
+.leftpart, .content {
+	bottom: 16px;
+	position: absolute;
+	top: 120px;
+	overflow: auto;
+}
+
+.leftpart {
+	width: 20%;
+	border: 1px solid Silver transparent;
+	font-size: 32px;
+
+	margin-left: -1px;
+	margin-right: -1px;
+	margin-top: 2px;
+}
+
+.content {
+	left: 20%;
+	right: 0;
+	top: 128px;
+	bottom: 16 px;
+	border: 1px solid Silver;
+	font-size: 14px;
+	position: absolute;
+	width: 700px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0px;
+	height: 16px;
+	width: 1000px;
+	border: 1px solid Silver;
+	text-align: center;
+	font-size: 14px;
+}
+
+<!-- Styles for adding news page -->
+
+.navigation {
+    margin: 20px 0px 0px 15px;
+	font-size: 14px;
+}
+
+.NewsTitleField{
+margin: 50px 0px 0px 50px;
+}
+
+.NewsDateField{
+margin: 20px 0px 0px 50px;
+}
+
+.NewsBriefField{
+margin: 20px 0px 0px 48px;
+}
+
+.NewsContentField{
+margin: 20px 0px 0px 33px;
+}
+
+.newsPageSaveButton{
+width: 10px;
+margin: 20px 0px 0px 290px;
+}
+.newsPageEditButton{
+width: 10px;
+margin: 20px 0px 0px 290px;
+}
+.newsPageCancelButton{
+width: 10px;
+margin: -21px 0px 0px 370px;
+}
+.newsPageDeleteButton{
+width: 10px;
+margin: -21px 0px 0px 470px;
+}
+
+<!-- Styles for news list page -->
+
+.newsListBlock{
+border: 1px solid Silver;
+}
+.newsListTitle{
+width: 490px;
+margin: 20px 0px 0px 30px;
+}
+.newsListBrief{
+width: 490px;
+margin: 10px 0px 0px 30px;
+}
+.newsListDate{
+height: 16px;
+width: 120px;
+margin: -35px 0px 0px 550px;
+}
+.newsListEditLink{
+height: 16px;
+width: 35px;
+margin: -10px 0px 0px 550px;
+font-size: 14px;
+}
+.newsListViewLink{
+height: 16px;
+width: 35px;
+margin: -32px 0px 0px 600px;
+font-size: 14px;
+}
+.newsListCheckbox{
+height: 16px;
+width: 16px;
+margin: -34px 0px 0px 650px;
+}
+.newsListDeleteButton{
+width: 10px;
+margin: 15px 0px 0px 600px;
+}
+
+.error{
+color: red;
+margin-left:50px;
+}
+
+.userMenuOuter{
+	width: 250px;
+	height: 220px;
+	position: fixed;
+	margin: 20px 0px 0px 30px;
+	border: 1px solid Silver;
+	font-size: 14px;
+	overflow: auto;
+	background-color: #DCDCDC;
+}
+.innerMenu {
+	width: 180px;
+	height: 120px;
+	margin: 20px 0px 0px 60px;
+	position: fixed;
+	border: 1px solid Silver;
+	font-size: 14px;
+	overflow: auto;
+	background-color: #FFFFFF;
+}
+
+.listMenu{
+margin: 25px 0px 0px 20px
+}
+
+.menuTitle{
+font-size: 28px;
+color:#FFFFFF;
+margin: 0px 0px 0px 50px
+}
+
+.localization{
+margin-left: 900px;
+}
+
+    </style>
+</head>
+<body>
+<div class=header>
+    <div class=prname>
+        <span th:text="#{locale.basicpage.projectname}"></span>
+    </div>
+    <div class=localization>
+    <a href="?lang=en" th:text="#{locale.basicpage.buttonname.en}"></a>
+    <a href="?lang=ru" th:text="#{locale.basicpage.buttonname.ru}"></a>
+    </div>
+</div>
+
+<div class=leftpart>
+    <div th:insert="user-menu :: menu"></div>
+</div>
+
+<div class=footer th:text="#{locale.basicpage.footer}"></div>
+
+<div class=content>
+    <div th:switch="${newsAttr}">
+        <div th:case="list" th:insert="news-list :: list"></div>
+        <div th:case="news" th:insert="news :: news-page"></div>
+    </div>
+</div>
+</div>
+</body>
+</html>

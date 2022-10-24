@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>News page</title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<div th:fragment="news-page">
+    <div class="navigation">
+        <a th:href="@{/}" th:text="#{locale.news.navigation.root}">News</a>
+        <span th:switch="${newsAction}">
+            <span th:case="add" th:text="#{locale.news.navigation.add}"> >> Add news</span>
+            <span th:case="edit" th:text="#{locale.news.navigation.edit}"> >> Edit news</span>
+            <span th:case="view" th:text="#{locale.news.navigation.view}"> >> View news</span>
+        </span>
+    </div>
+
+    <form action="#" th:action="@{news/create}" th:object="${news}" th:method="post">
+
+        <input type="hidden" th:field="*{id}" th:value="${news.id}">
+        <div class=NewsTitleField>
+            <p th:if="${#fields.hasErrors('title')}" th:errorclass="error" th:errors="*{title}"></p>
+            <div th:switch="${newsAction}">
+                <label for="title" th:text="#{locale.news.title}">Title</label>
+                <input th:case="add" id="title" type="text" size="60" th:field="*{title}">
+                <input th:case="edit" id="title" type="text" size="60" th:field="*{title}">
+                <span th:case="view" id="title" th:text="*{title}" th:field="*{title}"></span>
+            </div>
+        </div>
+
+        <div class=NewsDateField>
+            <p th:if="${#fields.hasErrors('dateOfCreation')}" th:errorclass="error" th:errors="*{dateOfCreation}"></p>
+            <div th:switch="${newsAction}">
+                <label for="date" th:text="#{locale.news.date}">Date</label>
+                <input th:case="add" id="date" type="datetime-local"
+                       th:field="*{dateOfCreation}">
+                <input th:case="edit" id="date" type="datetime-local"
+                       th:value="${#temporals.format(news.dateOfCreation, 'dd/MM/yyyy HH:mm')}"
+                       th:field="*{dateOfCreation}">
+                <span th:case="view" th:text="${#temporals.format(news.dateOfCreation, 'dd/MM/yyyy HH:mm')}" id="date"
+                      th:field="*{dateOfCreation}"></span>
+            </div>
+        </div>
+
+        <div class=NewsBriefField>
+            <p th:if="${#fields.hasErrors('brief')}" th:errorclass="error" th:errors="*{brief}"></p>
+            <div th:switch="${newsAction}">
+                <label for="brief" th:text="#{locale.news.brief}">Brief</label>
+                <textarea th:case="add" id="brief" name="brief"
+                          rows="6" cols="60" style="resize: none"
+                          th:field="*{brief}"></textarea>
+                <textarea th:case="edit" id="brief" name="brief"
+                          rows="6" cols="60" style="resize: none"
+                          th:field="*{brief}" th:text="*{brief}"></textarea>
+                <span th:case="view" th:text="*{brief}" id="brief" th:field="*{brief}"></span>
+            </div>
+        </div>
+
+        <div class=NewsContentField>
+            <p th:if="${#fields.hasErrors('content')}" th:errorclass="error" th:errors="*{content}"></p>
+            <div th:switch="${newsAction}">
+                <label for="content" th:text="#{locale.news.content}">Content</label>
+                <textarea th:case="add" id="content" name="content"
+                          rows="18" cols="60" style="resize: none"
+                          th:field="*{content}"></textarea>
+                <textarea th:case="edit" id="content" name="content"
+                          rows="18" cols="60" style="resize: none"
+                          th:field="*{content}" th:text="*{content}"></textarea>
+                <span th:case="view" th:text="*{content}" id="content" th:field="*{content}"></span>
+            </div>
+        </div>
+
+        <div class="buttonsInForm">
+            <div th:switch="${newsAction}">
+                <div th:case="add" th:insert="buttons :: save-button"></div>
+                <div th:case="edit" th:insert="buttons :: save-update-button"></div>
+                <div th:case="view" th:insert="buttons :: edit-button"></div>
+                <div th:insert="buttons :: cancel-button"></div>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="buttonsOutOfForm">
+        <form action="#" th:action="@{/news/deleteOneNews/{id}(id = ${news.id})}" th:object="${news}" th:method="delete">
+
+            <input type="hidden" th:field="*{id}" th:value="${news.id}">
+
+            <div th:switch="${newsAction}">
+                <div th:case="edit" th:insert="buttons :: delete-button"></div>
+                <div th:case="view" th:insert="buttons :: delete-button"></div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

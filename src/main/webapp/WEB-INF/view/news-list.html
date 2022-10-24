@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>News List</title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<div th:fragment="list">
+    <div class="navigation">
+        <a th:href="@{/}" th:text="#{locale.newslist.navigation.root}"></a>
+    </div>
+
+    <form action="#" th:action="@{news/create}" th:object="${news}" th:method="delete">
+
+    <div th:each="news: ${newsList}">
+
+        <div class="newsListBlock">
+            <div class="newsListTitle">
+                <p th:text="${news.title}"></p>
+            </div>
+            <br>
+            <div class="newsListDate">
+                <p th:text="${#temporals.format(news.dateOfCreation, 'dd/MM/yyyy HH:mm')}"></p>
+            </div>
+            <br>
+            <div class="newsListBrief">
+                <p th:text="${news.brief}"></p>
+            </div>
+            <br>
+            <div class="newsListEditLink">
+                <a th:href="@{/news/goToEditNewsPage/{id}(id = ${news.id})}" th:text="#{locale.newslist.link.edit}">Edit</a>
+            </div>
+            <br>
+            <div class="newsListViewLink">
+                <a th:href="@{/news/goToViewNewsPage/{id}(id = ${news.id})}" th:text="#{locale.newslist.link.view}">View</a>
+            </div>
+            <br>
+            <div class="newsListCheckbox">
+                <input type="checkbox" name="newsIDList" th:value="${news.id}"/>
+            </div>
+        </div>
+        <br>
+    </div>
+
+        <div class=newsListDeleteButton>
+            <input th:if="${newsList!=null}" type="submit" th:value="#{locale.buttons.delete}" th:formaction="@{/news/deleteMultipleNews}" />
+            <span th:unless="${newsList!=null}" th:text="#{locale.newslist.nonews}"> There is no news</span>
+        </div>
+
+    </form>
+</div>
+
+<div class=Pagination>
+</div>
+
+</div>
+</body>
+</html>

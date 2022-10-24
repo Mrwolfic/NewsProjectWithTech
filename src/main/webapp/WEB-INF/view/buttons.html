@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buttons</title>
+</head>
+<body>
+
+<div th:fragment="save-button">
+    <div class=newsPageSaveButton>
+        <input type="submit" th:value="#{locale.buttons.save}" th:formaction="@{/news/create}"/>
+    </div>
+</div>
+
+<div th:fragment="save-update-button">
+    <div class=newsPageSaveButton>
+        <input type="submit" th:value="#{locale.buttons.save}" th:formaction="@{/news/update/}"/>
+    </div>
+</div>
+
+<div th:fragment="edit-button">
+    <div class=newsPageEditButton>
+        <input type="submit" th:value="#{locale.buttons.edit}" th:formaction="@{/news/goToEditNewsPage/{id}(id = ${news.id})}"
+               th:formmethod="get"/>
+    </div>
+</div>
+
+<div th:fragment="cancel-button">
+    <div class=newsPageCancelButton>
+        <input type="submit" th:value="#{locale.buttons.cancel}" th:formaction="@{/basic-page}" th:formmethod="get"/>
+    </div>
+</div>
+
+<div th:fragment="delete-button">
+    <div class=newsPageDeleteButton>
+        <input type="submit" th:value="#{locale.buttons.delete}" th:formmethod="post"/>
+    </div>
+</div>
+
+
+</body>
+</html>
